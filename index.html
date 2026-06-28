@@ -94,6 +94,7 @@
     text-align: center;
   }
   .threshold-logo svg { width: 44px; height: 44px; color: var(--ink); }
+  .threshold-img { width: min(360px, 72vw); height: auto; display: block; }
   .threshold-logo .name {
     font-size: 1.6rem;
     font-weight: 300;
@@ -149,6 +150,7 @@
     padding: 120px 0 80px;
   }
   .hero-inner { max-width: 880px; }
+  .hero-logo { width: min(440px, 78vw); height: auto; display: block; margin-bottom: 36px; margin-left: -8px; }
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity 1s ease, transform 1s ease; }
   .reveal.in { opacity: 1; transform: translateY(0); }
   .hero h1 {
@@ -372,12 +374,20 @@
     .doors { grid-template-columns: 1fr; }
     .door:first-child { border-right: none; border-bottom: 1px solid var(--line); }
     .monitor-points { grid-template-columns: 1fr; gap: 28px; }
-    .trust-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
-    .map-wrap { height: 420px; }
+    .trust-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .map-wrap { height: 460px; }
     .wrap { padding: 0 24px; }
     .nav-status { display: none; }
     .door { padding: 56px 32px; }
     .footer-bottom { flex-direction: column; text-align: center; }
+    .monitor-head { flex-direction: column; align-items: flex-start; }
+    .monitor-head h2 { font-size: 1.7rem; }
+  }
+  @media (max-width: 620px) {
+    .map-label { font-size: 0.6rem; padding: 4px 7px; }
+    .map-wrap { height: 440px; }
+    .trust-item .big { font-size: 1.5rem; }
+    .trust-item .lbl { font-size: 0.68rem; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -557,13 +567,7 @@
 <div id="threshold">
   <div class="threshold-line"></div>
   <div class="threshold-logo">
-    <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M3 13L13 4L23 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <circle cx="3" cy="13" r="1.6" fill="currentColor"/>
-      <circle cx="23" cy="13" r="1.6" fill="currentColor"/>
-      <circle cx="13" cy="4" r="1.6" fill="currentColor"/>
-    </svg>
-    <div class="name">UMHAUS</div>
+    <img src="logo.png" alt="UMHAUS" class="threshold-img">
   </div>
 </div>
 
@@ -577,7 +581,7 @@
         <circle cx="23" cy="13" r="1.6" fill="currentColor"/>
         <circle cx="13" cy="4" r="1.6" fill="currentColor"/>
       </svg>
-      UMHAUS<span style="color:var(--cobalt)">.IA</span>
+      UMHAUS
     </div>
     <div class="nav-right">
       <span class="nav-status"><span class="dot"></span>SISTEMA EN LÍNEA</span>
@@ -589,6 +593,7 @@
 <!-- HERO -->
 <header class="hero">
   <div class="wrap hero-inner">
+    <img src="logo.png" alt="UMHAUS" class="hero-logo reveal">
     <span class="eyebrow reveal">Ingeniería inmobiliaria</span>
     <h1 class="reveal">Vendemos propiedades premium <span class="accent">en tiempo récord.</span></h1>
     <p class="hero-sub reveal">Inteligencia artificial y campañas de marketing dirigido encuentran al comprador ideal antes de que su propiedad llegue a los portales públicos. Con el respaldo de agentes con más de 10 años de experiencia.</p>
@@ -844,29 +849,44 @@
       canvas.height = h * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       centerNode = { x: w / 2, y: h / 2 };
-      const radius = Math.min(w, h) * 0.4;
+
+      const isMobile = w < 620;
+      // On mobile, pull nodes closer to vertical center and reduce horizontal spread
+      // so labels stay inside the box.
+      const radiusY = h * (isMobile ? 0.34 : 0.40);
+      const radiusX = w * (isMobile ? 0.20 : 0.40);
       targets = targetDefs.map(function(t, i) {
-        const x = centerNode.x + Math.cos(t.angle) * radius * (0.85 + (i % 2) * 0.15);
-        const y = centerNode.y + Math.sin(t.angle) * radius * (0.85 + (i % 2) * 0.15);
+        const x = centerNode.x + Math.cos(t.angle) * radiusX * (0.9 + (i % 2) * 0.1);
+        const y = centerNode.y + Math.sin(t.angle) * radiusY * (0.9 + (i % 2) * 0.1);
         return { name: t.name, angle: t.angle, x: x, y: y, phase: Math.random() * Math.PI * 2 };
       });
-      positionLabels();
+      positionLabels(isMobile);
     }
 
-    function positionLabels() {
+    function positionLabels(isMobile) {
       const old = document.querySelectorAll('.map-label');
       for (let i = 0; i < old.length; i++) old[i].parentNode.removeChild(old[i]);
       for (let ti = 0; ti < targets.length; ti++) {
         const t = targets[ti];
         const label = document.createElement('div');
         label.className = 'map-label';
-        const dx = t.x - centerNode.x;
-        const offX = dx > 0 ? 14 : -14;
-        label.style.left = (t.x + offX) + 'px';
-        label.style.top = (t.y - 10) + 'px';
-        label.style.transform = dx > 0 ? 'translateX(0)' : 'translateX(-100%)';
         label.textContent = t.name;
         wrapEl.appendChild(label);
+
+        const dx = t.x - centerNode.x;
+        // Measure label width to keep it fully inside the container
+        const lw = label.offsetWidth || 120;
+        let left = dx > 0 ? (t.x + 14) : (t.x - 14 - lw);
+        // Clamp horizontally within [4, w-lw-4]
+        if (left < 4) left = 4;
+        if (left + lw > w - 4) left = w - lw - 4;
+        let top = t.y - 10;
+        if (top < 4) top = 4;
+        if (top + 28 > h - 4) top = h - 32;
+
+        label.style.left = left + 'px';
+        label.style.top = top + 'px';
+        label.style.transform = 'none';
         (function(lbl) { setTimeout(function() { lbl.classList.add('in'); }, 600 + Math.random() * 700); })(label);
       }
     }
