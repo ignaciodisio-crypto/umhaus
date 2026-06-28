@@ -1008,10 +1008,12 @@
     }
 
     // Submit
-    document.getElementById('formSubmit').addEventListener('click', function() {
+    const submitBtn = document.getElementById('formSubmit');
+    submitBtn.addEventListener('click', function() {
       const name = document.getElementById('f-name').value.trim();
       const phone = document.getElementById('f-phone').value.trim();
       const email = document.getElementById('f-email').value.trim();
+      const address = document.getElementById('f-address').value.trim();
 
       if (!name || !phone || !email) {
         const firstEmpty = !name ? 'f-name' : (!phone ? 'f-phone' : 'f-email');
@@ -1022,13 +1024,53 @@
         return;
       }
 
-      // In production: send { name, phone, email, address, propType, counts } to your backend / CRM here.
-      formContent.innerHTML =
-        '<div class="form-success">' +
-        '<div class="check">✓</div>' +
-        '<h3>¡Listo, ' + name.split(' ')[0] + '!</h3>' +
-        '<p>Recibimos sus datos. Un asesor lo contactará muy pronto para iniciar el proceso de venta.</p>' +
-        '</div>';
+      // Loading state
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Enviando...';
+
+      const payload = {
+        Nombre: name,
+        Telefono: phone,
+        Email: email,
+        Direccion: address || '(no indicada)',
+        Tipo_de_propiedad: propType,
+        Dormitorios: counts.bed,
+        Banos: counts.bath,
+        _subject: 'Nueva solicitud de venta — ' + name
+      };
+
+      fetch('https://formspree.io/f/mgojydkb', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(function(response) {
+        if (response.ok) {
+          formContent.innerHTML =
+            '<div class="form-success">' +
+            '<div class="check">✓</div>' +
+            '<h3>¡Listo, ' + name.split(' ')[0] + '!</h3>' +
+            '<p>Recibimos sus datos. Un asesor lo contactará muy pronto para iniciar el proceso de venta.</p>' +
+            '</div>';
+        } else {
+          throw new Error('send failed');
+        }
+      })
+      .catch(function() {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Enviar y solicitar contacto →';
+        let errEl = document.getElementById('formError');
+        if (!errEl) {
+          errEl = document.createElement('p');
+          errEl.id = 'formError';
+          errEl.style.color = '#C0392B';
+          errEl.style.fontSize = '0.84rem';
+          errEl.style.textAlign = 'center';
+          errEl.style.marginTop = '12px';
+          submitBtn.parentNode.insertBefore(errEl, submitBtn.nextSibling);
+        }
+        errEl.textContent = 'No pudimos enviar el formulario. Inténtelo otra vez o escríbanos a i@umhaus.cl';
+      });
     });
   })();
 
