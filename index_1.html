@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UMHAUS.IA — Ingeniería inmobiliaria</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F3F2EE;
+    --bg-deep: #ECEAE4;
+    --bg-warm: #EEEBE4;
+    --ink: #232220;
+    --ink-soft: rgba(35, 34, 32, 0.62);
+    --ink-faint: rgba(35, 34, 32, 0.40);
+    --cobalt: #1E5FB8;
+    --cobalt-dim: rgba(30, 95, 184, 0.08);
+    --cobalt-line: rgba(30, 95, 184, 0.32);
+    --signal: #2E9E6E;
+    --black: #16151300;
+    --black-solid: #161513;
+    --line: rgba(35, 34, 32, 0.09);
+    --line-strong: rgba(35, 34, 32, 0.16);
+    --max-w: 1200px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    line-height: 1.5;
+  }
+
+  .mono { font-family: 'JetBrains Mono', monospace; font-weight: 400; letter-spacing: 0.01em; }
+
+  .wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 40px; }
+
+  a { color: inherit; text-decoration: none; }
+
+  h1, h2, h3 { font-weight: 200; letter-spacing: -0.02em; line-height: 1.12; }
+  strong { font-weight: 500; }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--cobalt);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .eyebrow::before { content: ''; width: 18px; height: 1px; background: var(--cobalt); }
+
+  /* ============ THRESHOLD LOADER ============ */
+  #threshold {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+  #threshold.done { opacity: 0; visibility: hidden; }
+  .threshold-line {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 1px;
+    height: 0;
+    background: linear-gradient(to bottom, transparent, var(--ink-soft), transparent);
+    transform: translate(-50%, -50%);
+    animation: lineGrow 1s ease forwards;
+  }
+  @keyframes lineGrow {
+    0% { height: 0; opacity: 0; }
+    40% { height: 60vh; opacity: 1; }
+    100% { height: 60vh; opacity: 1; }
+  }
+  .threshold-logo {
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    animation: logoReveal 1.2s ease 0.7s forwards;
+    text-align: center;
+  }
+  .threshold-logo svg { width: 44px; height: 44px; color: var(--ink); }
+  .threshold-logo .name {
+    font-size: 1.6rem;
+    font-weight: 300;
+    letter-spacing: 0.16em;
+    margin-top: 16px;
+    color: var(--ink);
+  }
+  @keyframes logoReveal {
+    0% { opacity: 0; transform: scale(0.96); filter: blur(4px); }
+    100% { opacity: 1; transform: scale(1); filter: blur(0); }
+  }
+
+  /* ============ NAV ============ */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(243, 242, 238, 0.8);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s, background 0.3s;
+    opacity: 0;
+    animation: fadeIn 1s ease 1.6s forwards;
+  }
+  nav.scrolled { border-color: var(--line); }
+  @keyframes fadeIn { to { opacity: 1; } }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 74px; }
+  .logo-mark { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; font-weight: 400; letter-spacing: 0.08em; }
+  .logo-mark svg { width: 20px; height: 20px; color: var(--cobalt); }
+  .nav-right { display: flex; align-items: center; gap: 32px; }
+  .nav-status { font-size: 0.72rem; color: var(--ink-faint); display: flex; align-items: center; gap: 8px; }
+  .nav-status .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--signal); animation: pulse 2.4s infinite; }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(46,158,110,0.45); }
+    70% { box-shadow: 0 0 0 6px rgba(46,158,110,0); }
+    100% { box-shadow: 0 0 0 0 rgba(46,158,110,0); }
+  }
+  .nav-cta {
+    font-size: 0.82rem;
+    padding: 9px 20px;
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+    transition: all 0.25s;
+  }
+  .nav-cta:hover { background: var(--ink); color: var(--bg); }
+
+  /* ============ HERO ============ */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 120px 0 80px;
+  }
+  .hero-inner { max-width: 880px; }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 1s ease, transform 1s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+  .hero h1 {
+    font-size: clamp(2.4rem, 6vw, 4.6rem);
+    margin: 28px 0 32px;
+  }
+  .hero h1 .accent { color: var(--ink-soft); }
+  .hero-sub {
+    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+    color: var(--ink-soft);
+    max-width: 600px;
+    line-height: 1.65;
+    margin-bottom: 44px;
+  }
+  .hero-actions { display: flex; gap: 18px; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--ink);
+    color: var(--bg);
+    padding: 16px 32px;
+    border-radius: 3px;
+    font-size: 0.92rem;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.4s, transform 0.3s;
+  }
+  .btn-primary::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(120deg, transparent 35%, rgba(255,255,255,0.18) 50%, transparent 65%);
+    transform: translateX(-120%);
+    transition: transform 0.7s ease;
+  }
+  .btn-primary:hover::before { transform: translateX(120%); }
+  .btn-primary:hover { box-shadow: 0 10px 30px rgba(35,34,32,0.18); transform: translateY(-1px); }
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 16px 28px;
+    border: 1px solid var(--line-strong);
+    border-radius: 3px;
+    font-size: 0.92rem;
+    color: var(--ink);
+    transition: border-color 0.3s;
+  }
+  .btn-ghost:hover { border-color: var(--ink); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px; left: 40px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-faint);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-scroll .l { width: 40px; height: 1px; background: var(--ink-faint); position: relative; overflow: hidden; }
+  .hero-scroll .l::after { content:''; position:absolute; inset:0; background: var(--cobalt); animation: scrollline 2.4s ease-in-out infinite; }
+  @keyframes scrollline { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+
+  /* ============ SECTION ============ */
+  section { position: relative; }
+  .pad { padding: 130px 0; }
+  .divider { height: 1px; background: var(--line); }
+
+  /* ============ MANIFESTO ============ */
+  .manifesto { padding: 150px 0; }
+  .manifesto .eyebrow { margin-bottom: 40px; }
+  .manifesto p {
+    font-size: clamp(1.5rem, 3vw, 2.4rem);
+    font-weight: 200;
+    line-height: 1.4;
+    letter-spacing: -0.015em;
+    max-width: 940px;
+    color: var(--ink);
+  }
+  .manifesto p .dim { color: var(--ink-faint); }
+  .manifesto p strong { color: var(--cobalt); font-weight: 400; }
+
+  /* ============ TWO DOORS ============ */
+  .doors { display: grid; grid-template-columns: 1fr 1fr; min-height: 480px; }
+  .door {
+    padding: 80px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    transition: background 0.4s;
+  }
+  .door:first-child { border-right: 1px solid var(--line); }
+  .door:hover { background: var(--bg-deep); }
+  .door-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.1em;
+    margin-bottom: 28px;
+  }
+  .door h3 { font-size: clamp(1.6rem, 2.6vw, 2.2rem); margin-bottom: 20px; }
+  .door p { color: var(--ink-soft); font-size: 1.02rem; line-height: 1.65; max-width: 420px; margin-bottom: 44px; }
+  .door-link {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 0.92rem;
+    color: var(--ink);
+    align-self: flex-start;
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 6px;
+    transition: gap 0.3s, border-color 0.3s;
+  }
+  .door-link:hover { gap: 16px; border-color: var(--cobalt); color: var(--cobalt); }
+  .door-link .arrow { transition: transform 0.3s; }
+  .door-link:hover .arrow { transform: translateX(2px); }
+
+  /* ============ AI MONITOR ============ */
+  .monitor { background: var(--bg-warm); padding: 130px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .monitor-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 16px; flex-wrap: wrap; gap: 20px; }
+  .monitor-head .left { max-width: 620px; }
+  .monitor-head h2 { font-size: clamp(1.8rem, 3.4vw, 2.8rem); margin: 22px 0 0; }
+  .monitor-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+    display: flex; align-items: center; gap: 10px;
+    border: 1px solid var(--line-strong);
+    padding: 8px 14px;
+    border-radius: 2px;
+  }
+  .monitor-id .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--signal); animation: pulse 2.4s infinite; }
+
+  .map-wrap {
+    position: relative;
+    height: 540px;
+    margin-top: 40px;
+    border: 1px solid var(--line);
+    background:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 52px 52px;
+    background-position: center;
+    overflow: hidden;
+  }
+  #map-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .map-label {
+    position: absolute;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--ink-soft);
+    background: rgba(238, 235, 228, 0.9);
+    padding: 5px 10px;
+    border: 1px solid var(--line-strong);
+    border-radius: 2px;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.6s, transform 0.6s;
+    pointer-events: none;
+  }
+  .map-label.in { opacity: 1; transform: translateY(0); }
+
+  .monitor-points {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-top: 56px;
+  }
+  .mp { display: flex; gap: 16px; align-items: flex-start; }
+  .mp-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--cobalt); margin-top: 7px; flex-shrink: 0; }
+  .mp h4 { font-size: 1.02rem; font-weight: 500; margin-bottom: 8px; }
+  .mp p { font-size: 0.9rem; color: var(--ink-faint); line-height: 1.6; }
+
+  .monitor-cta { margin-top: 70px; display: flex; align-items: center; justify-content: space-between; gap: 30px; flex-wrap: wrap; }
+  .monitor-cta p { font-size: 1.15rem; color: var(--ink); max-width: 560px; line-height: 1.5; }
+
+  /* ============ TRUST STRIP ============ */
+  .trust { padding: 90px 0; }
+  .trust-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; align-items: center; }
+  .trust-item { text-align: center; }
+  .trust-item .big { font-size: clamp(1.6rem, 2.4vw, 2.1rem); font-weight: 200; color: var(--ink); }
+  .trust-item .lbl { font-size: 0.8rem; color: var(--ink-faint); margin-top: 8px; letter-spacing: 0.02em; }
+
+  /* ============ FOOTER ============ */
+  footer { background: var(--black-solid); color: rgba(243,242,238,0.6); padding: 100px 0 50px; }
+  .footer-top { text-align: center; padding-bottom: 70px; border-bottom: 1px solid rgba(243,242,238,0.1); }
+  .footer-logo { display: inline-flex; align-items: center; gap: 12px; color: var(--bg); font-size: 1.4rem; font-weight: 300; letter-spacing: 0.1em; }
+  .footer-logo svg { width: 26px; height: 26px; color: var(--bg); }
+  .footer-tag { color: rgba(243,242,238,0.5); margin-top: 18px; font-size: 0.95rem; }
+  .footer-email {
+    display: block;
+    margin: 14px auto 0;
+    width: fit-content;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.92rem;
+    color: var(--bg);
+    border-bottom: 1px solid rgba(243,242,238,0.25);
+    padding-bottom: 3px;
+    transition: border-color 0.25s;
+  }
+  .footer-email:hover { border-color: var(--bg); }
+  .footer-cta-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-top: 36px;
+    background: var(--bg);
+    color: var(--black-solid);
+    padding: 15px 32px;
+    border-radius: 3px;
+    font-size: 0.92rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .footer-cta-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 36px; flex-wrap: wrap; gap: 16px;
+    font-size: 0.8rem;
+  }
+  .footer-links { display: flex; gap: 28px; }
+  .footer-links a { color: rgba(243,242,238,0.55); transition: color 0.2s; }
+  .footer-links a:hover { color: var(--bg); }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 860px) {
+    .doors { grid-template-columns: 1fr; }
+    .door:first-child { border-right: none; border-bottom: 1px solid var(--line); }
+    .monitor-points { grid-template-columns: 1fr; gap: 28px; }
+    .trust-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+    .map-wrap { height: 420px; }
+    .wrap { padding: 0 24px; }
+    .nav-status { display: none; }
+    .door { padding: 56px 32px; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    .reveal { opacity: 1; transform: none; }
+    #threshold { display: none; }
+  }
+
+  /* ============ FORM MODAL ============ */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: rgba(22, 21, 19, 0.55);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+  }
+  .modal-overlay.open { opacity: 1; visibility: visible; }
+  .modal {
+    background: var(--bg);
+    width: 100%;
+    max-width: 540px;
+    max-height: 92vh;
+    overflow-y: auto;
+    border-radius: 4px;
+    padding: 44px 44px 38px;
+    position: relative;
+    transform: translateY(20px) scale(0.98);
+    transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+    box-shadow: 0 30px 80px rgba(22,21,19,0.3);
+  }
+  .modal-overlay.open .modal { transform: translateY(0) scale(1); }
+  .modal-close {
+    position: absolute;
+    top: 20px; right: 22px;
+    width: 32px; height: 32px;
+    border: none;
+    background: transparent;
+    color: var(--ink-faint);
+    font-size: 1.4rem;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+  .modal-close:hover { color: var(--ink); }
+  .modal .eyebrow { margin-bottom: 14px; }
+  .modal h3 { font-size: 1.7rem; margin-bottom: 8px; }
+  .modal .sub { color: var(--ink-soft); font-size: 0.95rem; margin-bottom: 30px; line-height: 1.5; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .field { margin-bottom: 18px; }
+  .field.full { grid-column: 1 / -1; }
+  .field label {
+    display: block;
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .field input, .field select {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid var(--line-strong);
+    border-radius: 3px;
+    background: var(--bg-deep);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 300;
+    transition: border-color 0.25s, background 0.25s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .field input:focus, .field select:focus {
+    outline: none;
+    border-color: var(--cobalt);
+    background: var(--bg);
+  }
+  .field select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23232220' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+    cursor: pointer;
+  }
+  .seg {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid var(--line-strong);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .seg button {
+    padding: 13px;
+    border: none;
+    background: var(--bg-deep);
+    color: var(--ink-soft);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.92rem;
+    cursor: pointer;
+    transition: background 0.25s, color 0.25s;
+  }
+  .seg button + button { border-left: 1px solid var(--line-strong); }
+  .seg button.active { background: var(--ink); color: var(--bg); }
+  .stepper {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--line-strong);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .stepper button {
+    width: 44px; height: 44px;
+    border: none;
+    background: var(--bg-deep);
+    color: var(--ink);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .stepper button:hover { background: var(--line); }
+  .stepper .val {
+    flex: 1;
+    text-align: center;
+    font-size: 1rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .modal-submit {
+    width: 100%;
+    margin-top: 12px;
+    background: var(--ink);
+    color: var(--bg);
+    border: none;
+    padding: 16px;
+    border-radius: 3px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.4s, transform 0.3s;
+  }
+  .modal-submit:hover { box-shadow: 0 10px 30px rgba(35,34,32,0.2); transform: translateY(-1px); }
+  .modal-note { text-align: center; font-size: 0.78rem; color: var(--ink-faint); margin-top: 16px; }
+
+  .form-success { text-align: center; padding: 30px 0 10px; }
+  .form-success .check {
+    width: 56px; height: 56px;
+    margin: 0 auto 22px;
+    border-radius: 50%;
+    border: 1.5px solid var(--signal);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--signal);
+    font-size: 1.6rem;
+  }
+  .form-success h3 { margin-bottom: 10px; }
+  .form-success p { color: var(--ink-soft); font-size: 0.95rem; line-height: 1.55; }
+
+  @media (max-width: 540px) {
+    .modal { padding: 38px 24px 30px; }
+    .form-row { grid-template-columns: 1fr; gap: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- THRESHOLD LOADER -->
+<div id="threshold">
+  <div class="threshold-line"></div>
+  <div class="threshold-logo">
+    <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3 13L13 4L23 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="3" cy="13" r="1.6" fill="currentColor"/>
+      <circle cx="23" cy="13" r="1.6" fill="currentColor"/>
+      <circle cx="13" cy="4" r="1.6" fill="currentColor"/>
+    </svg>
+    <div class="name">UMHAUS</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="wrap">
+    <div class="logo-mark">
+      <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 13L13 4L23 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="3" cy="13" r="1.6" fill="currentColor"/>
+        <circle cx="23" cy="13" r="1.6" fill="currentColor"/>
+        <circle cx="13" cy="4" r="1.6" fill="currentColor"/>
+      </svg>
+      UMHAUS<span style="color:var(--cobalt)">.IA</span>
+    </div>
+    <div class="nav-right">
+      <span class="nav-status"><span class="dot"></span>SISTEMA EN LÍNEA</span>
+      <a href="#" class="nav-cta" data-open-form>Vender mi propiedad</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap hero-inner">
+    <span class="eyebrow reveal">Ingeniería inmobiliaria</span>
+    <h1 class="reveal">Vendemos propiedades premium <span class="accent">en tiempo récord.</span></h1>
+    <p class="hero-sub reveal">Inteligencia artificial y campañas de marketing dirigido encuentran al comprador ideal antes de que su propiedad llegue a los portales públicos. Con el respaldo de agentes con más de 10 años de experiencia.</p>
+    <div class="hero-actions reveal">
+      <a href="#" class="btn-primary" data-open-form>Vender mi propiedad <span>→</span></a>
+      <a href="#monitor" class="btn-ghost">Ver cómo funciona</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><span class="l"></span>SCROLL</div>
+</header>
+
+<!-- MANIFESTO -->
+<section class="manifesto">
+  <div class="wrap">
+    <span class="eyebrow reveal">El mercado cambió</span>
+    <p class="reveal">Esperar sentados a que llegue un comprador quedó obsoleto. <span class="dim">Nosotros analizamos el mercado en tiempo real con inteligencia artificial y</span> <strong>buscamos activamente</strong> <span class="dim">al comprador correcto para su propiedad.</span></p>
+  </div>
+</section>
+
+<!-- TWO DOORS -->
+<section>
+  <div class="divider"></div>
+  <div class="wrap" style="padding:0;">
+    <div class="doors">
+      <div class="door">
+        <div>
+          <div class="door-num">01 — PROPIETARIOS</div>
+          <h3>Venda su propiedad,<br>sin perder tiempo.</h3>
+          <p>Marketing ultra-dirigido y análisis de datos para encontrar al comprador ideal y cerrar en tiempo récord, cuidando el valor de su patrimonio.</p>
+        </div>
+        <a href="#" class="door-link" data-open-form>Solicitar una valuación <span class="arrow">→</span></a>
+      </div>
+      <div class="door">
+        <div>
+          <div class="door-num">02 — COMPRADORES</div>
+          <h3>Acceda a propiedades<br>antes que nadie.</h3>
+          <p>Acceso exclusivo y confidencial a propiedades de alto estándar antes de que se publiquen al público general.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="divider"></div>
+</section>
+
+<!-- AI MONITOR -->
+<section class="monitor" id="monitor">
+  <div class="wrap">
+    <div class="monitor-head">
+      <div class="left">
+        <span class="eyebrow reveal">La tecnología, en vivo</span>
+        <h2 class="reveal">Así encontramos al comprador de cada propiedad.</h2>
+      </div>
+      <div class="monitor-id mono reveal"><span class="dot"></span>ID: UMHAUS.IA · PROCESANDO</div>
+    </div>
+
+    <div class="map-wrap reveal" id="mapWrap">
+      <canvas id="map-canvas"></canvas>
+    </div>
+
+    <div class="monitor-points">
+      <div class="mp reveal">
+        <span class="mp-dot"></span>
+        <div>
+          <h4>Analizamos el mercado</h4>
+          <p>La inteligencia artificial estudia datos del mercado en tiempo real para entender quién está comprando.</p>
+        </div>
+      </div>
+      <div class="mp reveal">
+        <span class="mp-dot"></span>
+        <div>
+          <h4>Encontramos al comprador</h4>
+          <p>Con campañas dirigidas llegamos directo al perfil exacto que busca una propiedad como la suya.</p>
+        </div>
+      </div>
+      <div class="mp reveal">
+        <span class="mp-dot"></span>
+        <div>
+          <h4>Un agente cierra el trato</h4>
+          <p>La tecnología hace la búsqueda; una persona con experiencia lleva todo el proceso, con total confidencialidad.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="monitor-cta">
+      <p>¿Quiere ver su propiedad encontrar a su comprador ideal, sin perderse entre miles de anuncios?</p>
+      <a href="#" class="btn-primary" data-open-form>Vender mi propiedad <span>→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="trust">
+  <div class="wrap">
+    <div class="trust-grid">
+      <div class="trust-item reveal"><div class="big">+10</div><div class="lbl">Años de experiencia</div></div>
+      <div class="trust-item reveal"><div class="big">100%</div><div class="lbl">Confidencial</div></div>
+      <div class="trust-item reveal"><div class="big">IA</div><div class="lbl">+ agentes expertos</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contacto">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-logo">
+        <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 13L13 4L23 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="3" cy="13" r="1.6" fill="currentColor"/>
+          <circle cx="23" cy="13" r="1.6" fill="currentColor"/>
+          <circle cx="13" cy="4" r="1.6" fill="currentColor"/>
+        </svg>
+        UMHAUS.IA
+      </div>
+      <div class="footer-tag">Ingeniería inmobiliaria. Vendemos rápido, con tecnología y cercanía.</div>
+      <a href="mailto:i@umhaus.cl" class="footer-email">i@umhaus.cl</a>
+      <a href="#" class="footer-cta-btn" data-open-form>Vender mi propiedad <span>→</span></a>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 UMHAUS.IA</span>
+      <div class="footer-links">
+        <a href="#">Privacidad</a>
+        <a href="#">Términos</a>
+        <a href="mailto:i@umhaus.cl">Contacto</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- FORM MODAL -->
+<div class="modal-overlay" id="formModal">
+  <div class="modal">
+    <button class="modal-close" id="modalClose" aria-label="Cerrar">×</button>
+    <div id="formContent">
+      <span class="eyebrow">Vender mi propiedad</span>
+      <h3>Empecemos.</h3>
+      <p class="sub">Déjenos sus datos y un asesor lo contactará para iniciar el proceso. Sin compromiso.</p>
+
+      <div class="field full">
+        <label>Nombre completo</label>
+        <input type="text" id="f-name" placeholder="Su nombre" autocomplete="name">
+      </div>
+
+      <div class="form-row">
+        <div class="field">
+          <label>Teléfono</label>
+          <input type="tel" id="f-phone" placeholder="+56 9 ..." autocomplete="tel">
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" id="f-email" placeholder="correo@ejemplo.com" autocomplete="email">
+        </div>
+      </div>
+
+      <div class="field full">
+        <label>Dirección de la propiedad</label>
+        <input type="text" id="f-address" placeholder="Calle, número, comuna" autocomplete="street-address">
+      </div>
+
+      <div class="field full">
+        <label>Tipo de propiedad</label>
+        <div class="seg" id="propType">
+          <button type="button" class="active" data-type="Casa">Casa</button>
+          <button type="button" data-type="Departamento">Departamento</button>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="field">
+          <label>Dormitorios</label>
+          <div class="stepper">
+            <button type="button" data-step="bed" data-dir="-1">−</button>
+            <span class="val" id="bedVal">3</span>
+            <button type="button" data-step="bed" data-dir="1">+</button>
+          </div>
+        </div>
+        <div class="field">
+          <label>Baños</label>
+          <div class="stepper">
+            <button type="button" data-step="bath" data-dir="-1">−</button>
+            <span class="val" id="bathVal">2</span>
+            <button type="button" data-step="bath" data-dir="1">+</button>
+          </div>
+        </div>
+      </div>
+
+      <button class="modal-submit" id="formSubmit">Enviar y solicitar contacto →</button>
+      <p class="modal-note">Sus datos son confidenciales y no se comparten con terceros.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---------- Threshold loader ----------
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      document.getElementById('threshold').classList.add('done');
+    }, reducedMotion ? 0 : 2100);
+  });
+
+  // ---------- Nav scroll border ----------
+  window.addEventListener('scroll', function() {
+    const nav = document.getElementById('nav');
+    if (window.scrollY > 20) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  });
+
+  // ---------- Reveal on scroll ----------
+  const reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.15 });
+    for (let i = 0; i < reveals.length; i++) obs.observe(reveals[i]);
+    // hero reveals fire after threshold
+    setTimeout(function() {
+      const heroReveals = document.querySelectorAll('.hero .reveal');
+      for (let i = 0; i < heroReveals.length; i++) {
+        (function(el, idx) { setTimeout(function() { el.classList.add('in'); }, idx * 120); })(heroReveals[i], i);
+      }
+    }, reducedMotion ? 0 : 2200);
+  } else {
+    for (let i = 0; i < reveals.length; i++) reveals[i].classList.add('in');
+  }
+
+  // ---------- Network map ----------
+  (function() {
+    const canvas = document.getElementById('map-canvas');
+    const ctx = canvas.getContext('2d');
+    const wrapEl = document.getElementById('mapWrap');
+    let w, h, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let centerNode, targets = [];
+    let hoverX = null, hoverY = null;
+
+    const targetDefs = [
+      { name: 'Compradores residenciales', angle: -2.3 },
+      { name: 'Inversionistas', angle: -0.6 },
+      { name: 'Family Offices', angle: 0.9 },
+      { name: 'Fondos privados de inversión', angle: 2.4 }
+    ];
+
+    function resize() {
+      let rect = wrapEl.getBoundingClientRect();
+      w = wrapEl.clientWidth || rect.width;
+      h = wrapEl.clientHeight || rect.height;
+      if (!w || w < 100) { w = Math.min(window.innerWidth, 1200) - 80; }
+      if (!h || h < 20) { h = 540; }
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      centerNode = { x: w / 2, y: h / 2 };
+      const radius = Math.min(w, h) * 0.4;
+      targets = targetDefs.map(function(t, i) {
+        const x = centerNode.x + Math.cos(t.angle) * radius * (0.85 + (i % 2) * 0.15);
+        const y = centerNode.y + Math.sin(t.angle) * radius * (0.85 + (i % 2) * 0.15);
+        return { name: t.name, angle: t.angle, x: x, y: y, phase: Math.random() * Math.PI * 2 };
+      });
+      positionLabels();
+    }
+
+    function positionLabels() {
+      const old = document.querySelectorAll('.map-label');
+      for (let i = 0; i < old.length; i++) old[i].parentNode.removeChild(old[i]);
+      for (let ti = 0; ti < targets.length; ti++) {
+        const t = targets[ti];
+        const label = document.createElement('div');
+        label.className = 'map-label';
+        const dx = t.x - centerNode.x;
+        const offX = dx > 0 ? 14 : -14;
+        label.style.left = (t.x + offX) + 'px';
+        label.style.top = (t.y - 10) + 'px';
+        label.style.transform = dx > 0 ? 'translateX(0)' : 'translateX(-100%)';
+        label.textContent = t.name;
+        wrapEl.appendChild(label);
+        (function(lbl) { setTimeout(function() { lbl.classList.add('in'); }, 600 + Math.random() * 700); })(label);
+      }
+    }
+
+    function quadPoint(p0, p1, c, t) {
+      const x = (1 - t) * (1 - t) * p0.x + 2 * (1 - t) * t * c.x + t * t * p1.x;
+      const y = (1 - t) * (1 - t) * p0.y + 2 * (1 - t) * t * c.y + t * t * p1.y;
+      return { x: x, y: y };
+    }
+
+    let tStart = performance.now();
+    function draw(now) {
+      ctx.clearRect(0, 0, w, h);
+      const elapsed = (now - tStart) / 1000;
+
+      for (let ti = 0; ti < targets.length; ti++) {
+        const t = targets[ti];
+        const mx = (centerNode.x + t.x) / 2;
+        const my = (centerNode.y + t.y) / 2;
+        const bend = 26 * Math.sin(elapsed * 0.4 + t.phase);
+        const nx = -(t.y - centerNode.y), ny = (t.x - centerNode.x);
+        const nlen = Math.hypot(nx, ny) || 1;
+        const ctrl = { x: mx + (nx / nlen) * bend, y: my + (ny / nlen) * bend };
+
+        let magnet = 0;
+        if (hoverX !== null) {
+          const d = Math.hypot(hoverX - mx, hoverY - my);
+          magnet = Math.max(0, 1 - d / 170);
+        }
+
+        ctx.beginPath();
+        ctx.moveTo(centerNode.x, centerNode.y);
+        ctx.quadraticCurveTo(
+          ctrl.x + (hoverX !== null ? (hoverX - ctrl.x) * magnet * 0.18 : 0),
+          ctrl.y + (hoverY !== null ? (hoverY - ctrl.y) * magnet * 0.18 : 0),
+          t.x, t.y
+        );
+        ctx.strokeStyle = 'rgba(30, 95, 184, ' + (0.20 + magnet * 0.4) + ')';
+        ctx.lineWidth = 1 + magnet * 0.8;
+        ctx.stroke();
+
+        const pulseT = (elapsed * 0.22 + t.phase / 6) % 1;
+        const pp = quadPoint(centerNode, t, ctrl, pulseT);
+        ctx.beginPath();
+        ctx.arc(pp.x, pp.y, 1.8, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(30, 95, 184, 0.6)';
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(t.x, t.y, 3, 0, Math.PI * 2);
+        ctx.fillStyle = '#232220';
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(t.x, t.y, 6 + magnet * 2, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(35,34,32,0.22)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+
+      ctx.beginPath();
+      ctx.arc(centerNode.x, centerNode.y, 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#232220';
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(centerNode.x, centerNode.y, 11 + Math.sin(elapsed * 1.4) * 2, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(35,34,32,0.18)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // center label
+      ctx.font = '10px monospace';
+      ctx.fillStyle = 'rgba(35,34,32,0.4)';
+      ctx.textAlign = 'center';
+      ctx.fillText('SU PROPIEDAD', centerNode.x, centerNode.y + 30);
+
+      if (!reducedMotion) requestAnimationFrame(draw);
+    }
+
+    wrapEl.addEventListener('mousemove', function(e) {
+      const rect = wrapEl.getBoundingClientRect();
+      hoverX = e.clientX - rect.left;
+      hoverY = e.clientY - rect.top;
+    });
+    wrapEl.addEventListener('mouseleave', function() { hoverX = null; hoverY = null; });
+
+    window.addEventListener('resize', resize);
+    resize();
+    requestAnimationFrame(draw);
+    if (reducedMotion) draw(performance.now());
+  })();
+  // ---------- Form modal ----------
+  (function() {
+    const modal = document.getElementById('formModal');
+    const openers = document.querySelectorAll('[data-open-form]');
+    const closeBtn = document.getElementById('modalClose');
+    const formContent = document.getElementById('formContent');
+
+    function openModal(e) {
+      if (e) e.preventDefault();
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    for (let i = 0; i < openers.length; i++) {
+      openers[i].addEventListener('click', openModal);
+    }
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    });
+
+    // Segmented control (type)
+    let propType = 'Casa';
+    const typeBtns = document.querySelectorAll('#propType button');
+    for (let i = 0; i < typeBtns.length; i++) {
+      typeBtns[i].addEventListener('click', function() {
+        for (let j = 0; j < typeBtns.length; j++) typeBtns[j].classList.remove('active');
+        this.classList.add('active');
+        propType = this.dataset.type;
+      });
+    }
+
+    // Steppers
+    const counts = { bed: 3, bath: 2 };
+    const stepBtns = document.querySelectorAll('[data-step]');
+    for (let i = 0; i < stepBtns.length; i++) {
+      stepBtns[i].addEventListener('click', function() {
+        const key = this.dataset.step;
+        const dir = parseInt(this.dataset.dir, 10);
+        counts[key] = Math.max(0, Math.min(20, counts[key] + dir));
+        document.getElementById(key === 'bed' ? 'bedVal' : 'bathVal').textContent = counts[key];
+      });
+    }
+
+    // Submit
+    const submitBtn = document.getElementById('formSubmit');
+    submitBtn.addEventListener('click', function() {
+      const name = document.getElementById('f-name').value.trim();
+      const phone = document.getElementById('f-phone').value.trim();
+      const email = document.getElementById('f-email').value.trim();
+      const address = document.getElementById('f-address').value.trim();
+
+      if (!name || !phone || !email) {
+        const firstEmpty = !name ? 'f-name' : (!phone ? 'f-phone' : 'f-email');
+        const el = document.getElementById(firstEmpty);
+        el.style.borderColor = '#C0392B';
+        el.focus();
+        setTimeout(function() { el.style.borderColor = ''; }, 1500);
+        return;
+      }
+
+      // Loading state
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Enviando...';
+
+      const payload = {
+        Nombre: name,
+        Telefono: phone,
+        Email: email,
+        Direccion: address || '(no indicada)',
+        Tipo_de_propiedad: propType,
+        Dormitorios: counts.bed,
+        Banos: counts.bath,
+        _subject: 'Nueva solicitud de venta — ' + name
+      };
+
+      fetch('https://formspree.io/f/mgojydkb', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(function(response) {
+        if (response.ok) {
+          formContent.innerHTML =
+            '<div class="form-success">' +
+            '<div class="check">✓</div>' +
+            '<h3>¡Listo, ' + name.split(' ')[0] + '!</h3>' +
+            '<p>Recibimos sus datos. Un asesor lo contactará muy pronto para iniciar el proceso de venta.</p>' +
+            '</div>';
+        } else {
+          throw new Error('send failed');
+        }
+      })
+      .catch(function() {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Enviar y solicitar contacto →';
+        let errEl = document.getElementById('formError');
+        if (!errEl) {
+          errEl = document.createElement('p');
+          errEl.id = 'formError';
+          errEl.style.color = '#C0392B';
+          errEl.style.fontSize = '0.84rem';
+          errEl.style.textAlign = 'center';
+          errEl.style.marginTop = '12px';
+          submitBtn.parentNode.insertBefore(errEl, submitBtn.nextSibling);
+        }
+        errEl.textContent = 'No pudimos enviar el formulario. Inténtelo otra vez o escríbanos a i@umhaus.cl';
+      });
+    });
+  })();
+
+</script>
+
+</body>
+</html>
