@@ -232,6 +232,68 @@
   .manifesto p .dim { color: var(--ink-faint); }
   .manifesto p strong { color: var(--cobalt); font-weight: 400; }
 
+  /* ============ ABOUT ============ */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 70px;
+    align-items: start;
+  }
+  .about-head .eyebrow { margin-bottom: 24px; }
+  .about-head h2 {
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    color: var(--ink);
+    max-width: 360px;
+  }
+  .about-head h2 .accent { color: var(--ink-soft); }
+  .about-body p {
+    font-size: 1.02rem;
+    color: var(--ink-soft);
+    line-height: 1.75;
+    margin-bottom: 22px;
+    max-width: 640px;
+  }
+  .about-clients {
+    margin: 30px 0;
+    padding: 26px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .about-clients-label {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-faint);
+    margin-bottom: 16px;
+  }
+  .about-clients-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 28px;
+  }
+  .about-clients-list span {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    position: relative;
+    padding-left: 14px;
+  }
+  .about-clients-list span::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 50%;
+    width: 5px; height: 5px;
+    margin-top: -2.5px;
+    border-radius: 50%;
+    background: var(--cobalt);
+  }
+  .about-clients-list span.more {
+    color: var(--ink-faint);
+    font-style: italic;
+    padding-left: 0;
+  }
+  .about-clients-list span.more::before { display: none; }
+
   /* ============ TWO DOORS ============ */
   .doors { display: grid; grid-template-columns: 1fr 1fr; min-height: 480px; }
   .door {
@@ -384,6 +446,8 @@
     .footer-bottom { flex-direction: column; text-align: center; }
     .monitor-head { flex-direction: column; align-items: flex-start; }
     .monitor-head h2 { font-size: 1.7rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 30px; }
+    .about-head h2 { max-width: 100%; }
   }
   @media (max-width: 620px) {
     .map-label { font-size: 0.6rem; padding: 4px 7px; }
@@ -612,6 +676,29 @@
   <div class="wrap">
     <span class="eyebrow reveal">El mercado cambió</span>
     <p class="reveal">Esperar sentados a que llegue un comprador quedó obsoleto. <span class="dim">Nosotros analizamos el mercado en tiempo real con inteligencia artificial y</span> <strong>buscamos activamente</strong> <span class="dim">al comprador correcto para su propiedad.</span></p>
+  </div>
+</section>
+
+<!-- ABOUT / QUIÉNES SOMOS -->
+<section class="about" id="quienes-somos">
+  <div class="divider"></div>
+  <div class="wrap pad">
+    <div class="about-grid">
+      <div class="about-head">
+        <span class="eyebrow reveal">Quiénes somos</span>
+        <h2 class="reveal">Profesionales del mundo inmobiliario, <span class="accent">impulsados por tecnología.</span></h2>
+      </div>
+      <div class="about-body">
+        <p class="reveal">En UMHAUS contamos con más de 15 años de experiencia en la industria inmobiliaria, participando en el desarrollo, construcción y comercialización de proyectos de alto nivel.</p>
+        <p class="reveal">Esta trayectoria nos permite entender el ciclo completo de un proyecto —desde la construcción hasta la comercialización— y aplicar ese conocimiento para ofrecer un servicio más eficiente, estratégico y orientado a resultados.</p>
+        <div class="about-clients reveal">
+          <span class="about-clients-label mono">Nuestro equipo ha trabajado junto a</span>
+          <div class="about-clients-list">
+            <span>Besalco</span><span>Metra</span><span>ICOM</span><span>IKNOW</span><span>Cantauco</span><span>Grupo Hogares</span><span>Inmobiliaria San Isidro</span><span class="more">entre otros</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
