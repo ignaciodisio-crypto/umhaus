@@ -433,6 +433,29 @@
   .footer-links a { color: rgba(243,242,238,0.55); transition: color 0.2s; }
   .footer-links a:hover { color: var(--bg); }
 
+
+  /* ============ PROPIEDADES ============ */
+  .nav-link { font-size: 0.82rem; color: var(--ink-soft); transition: color 0.2s; }
+  .nav-link:hover { color: var(--ink); }
+  .listings-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin-bottom: 48px; }
+  .listings-head h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); margin-top: 22px; }
+  .listings-head p { color: var(--ink-soft); max-width: 380px; font-size: 0.98rem; line-height: 1.6; }
+  .listings { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 28px; }
+  .card { display: block; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; background: var(--bg); transition: transform 0.4s, box-shadow 0.4s, border-color 0.4s; }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 18px 40px rgba(35,34,32,0.10); border-color: var(--line-strong); }
+  .card-img { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--bg-deep); }
+  .card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.9s ease; }
+  .card:hover .card-img img { transform: scale(1.04); }
+  .card-tag { position: absolute; top: 14px; left: 14px; font-family: 'JetBrains Mono', monospace; font-size: 0.64rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 10px; border-radius: 2px; background: var(--cobalt); color: #fff; }
+  .card-body { padding: 24px 26px 26px; }
+  .card-loc { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); }
+  .card-title { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; margin: 10px 0 16px; }
+  .card-title h3 { font-size: 1.5rem; font-weight: 300; }
+  .card-title .uf { font-size: 1.15rem; font-weight: 400; white-space: nowrap; }
+  .card-specs { display: flex; gap: 18px; flex-wrap: wrap; font-size: 0.88rem; color: var(--ink-soft); padding-top: 16px; border-top: 1px solid var(--line); }
+  .card-more { margin-top: 18px; font-size: 0.88rem; color: var(--cobalt); display: inline-flex; gap: 8px; }
+  @media (max-width: 860px) { .nav-link { display: none; } .listings { grid-template-columns: 1fr; } }
+
   /* ============ RESPONSIVE ============ */
   @media (max-width: 860px) {
     .doors { grid-template-columns: 1fr; }
@@ -651,6 +674,7 @@
     </div>
     <div class="nav-right">
       <span class="nav-status"><span class="dot"></span>SISTEMA EN LÍNEA</span>
+      <a href="#propiedades" class="nav-link">Propiedades</a>
       <a href="#" class="nav-cta" data-open-form>Vender mi propiedad</a>
     </div>
   </div>
@@ -721,10 +745,39 @@
           <h3 style="color: var(--cobalt); font-weight: 300;">Acceda a propiedades<br>antes que nadie.</h3>
           <p>Acceso exclusivo y confidencial a propiedades de alto estándar antes de que se publiquen al público general.</p>
         </div>
+        <a href="#propiedades" class="door-link">Ver propiedades en venta <span class="arrow">→</span></a>
       </div>
     </div>
   </div>
   <div class="divider"></div>
+</section>
+
+<!-- PROPIEDADES -->
+<section class="pad" id="propiedades">
+  <div class="wrap">
+    <div class="listings-head">
+      <div>
+        <span class="eyebrow reveal">Propiedades en venta</span>
+        <h2 class="reveal">Seleccionadas por UMHAUS.</h2>
+      </div>
+      <p class="reveal">Propiedades verificadas, con fotos reales y toda la información para decidir. Agende su visita directo por WhatsApp.</p>
+    </div>
+    <div class="listings">
+      <!-- Para agregar otra propiedad: copiar este bloque <a class="card">…</a> y cambiar los datos -->
+      <a href="/propiedades/martin-de-zamora/" class="card reveal">
+        <div class="card-img">
+          <img src="/propiedades/martin-de-zamora/img/portada.jpg" alt="Martín de Zamora, Las Condes" loading="lazy">
+          <span class="card-tag">Recién rebajado</span>
+        </div>
+        <div class="card-body">
+          <div class="card-loc">Las Condes · Barrio San Pascual</div>
+          <div class="card-title"><h3>Martín de Zamora</h3><span class="uf">UF 9.400</span></div>
+          <div class="card-specs"><span>153 m²</span><span>4 dorm.</span><span>3 baños</span><span>2 estac.</span></div>
+          <span class="card-more">Ver propiedad →</span>
+        </div>
+      </a>
+    </div>
+  </div>
 </section>
 
 <!-- AI MONITOR -->
