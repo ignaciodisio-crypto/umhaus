@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hipólito Irigoyen · Providencia — UMHAUS</title>
+<meta name="description" content="Departamento en Barrio Las Lilas, Providencia, a 5 minutos del Metro Colón. 107 m², 3 dormitorios más servicio, principal en suite, 3 baños, estacionamiento y bodega. UF 7.590.">
+<meta property="og:title" content="Hipólito Irigoyen · Providencia — UF 7.590">
+<meta property="og:description" content="Recién rebajado · 107 m² · 3D + servicio · 3B · estacionamiento · Barrio Las Lilas">
+<meta property="og:image" content="https://www.umhaus.cl/propiedades/hipolito-irigoyen/img/portada.jpg">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F3F2EE; --bg-deep: #ECEAE4; --bg-warm: #EEEBE4;
+    --ink: #232220; --ink-soft: rgba(35,34,32,0.62); --ink-faint: rgba(35,34,32,0.40);
+    --cobalt: #1E5FB8; --cobalt-dim: rgba(30,95,184,0.08); --signal: #2E9E6E;
+    --black-solid: #161513; --line: rgba(35,34,32,0.09); --line-strong: rgba(35,34,32,0.16);
+    --max-w: 1200px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--ink); font-family: 'Inter', sans-serif; font-weight: 300; -webkit-font-smoothing: antialiased; line-height: 1.5; overflow-x: hidden; }
+  .mono { font-family: 'JetBrains Mono', monospace; font-weight: 400; letter-spacing: 0.01em; }
+  .wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 40px; }
+  a { color: inherit; text-decoration: none; }
+  h1, h2, h3 { font-weight: 200; letter-spacing: -0.02em; line-height: 1.12; }
+  strong { font-weight: 500; }
+  .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--cobalt); display: inline-flex; align-items: center; gap: 10px; }
+  .eyebrow::before { content: ''; width: 18px; height: 1px; background: var(--cobalt); }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(243,242,238,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 74px; }
+  .logo-mark { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; font-weight: 400; letter-spacing: 0.08em; }
+  .logo-mark svg { width: 20px; height: 20px; color: var(--cobalt); }
+  .nav-right { display: flex; align-items: center; gap: 28px; }
+  .nav-back { font-size: 0.82rem; color: var(--ink-soft); transition: color .2s; }
+  .nav-back:hover { color: var(--ink); }
+  .nav-cta { font-size: 0.82rem; padding: 9px 20px; border: 1px solid var(--ink); border-radius: 2px; background: var(--ink); color: var(--bg); transition: all .25s; }
+  .nav-cta:hover { background: var(--black-solid); transform: translateY(-1px); box-shadow: 0 6px 18px rgba(35,34,32,0.18); }
+
+  /* HERO */
+  .p-hero { padding: 120px 0 0; }
+  .p-hero-img { position: relative; width: 100%; aspect-ratio: 16 / 8; border-radius: 4px; overflow: hidden; background: var(--bg-deep); cursor: zoom-in; }
+  .p-hero-img img { width: 100%; height: 100%; object-fit: cover; object-position: center 60%; display: block; transition: transform 1.2s ease; }
+  .p-hero-img:hover img { transform: scale(1.015); }
+  .badge { position: absolute; top: 20px; left: 20px; display: inline-flex; gap: 8px; }
+  .badge span { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 7px 12px; border-radius: 2px; background: rgba(243,242,238,0.92); color: var(--ink); }
+  .badge span.hot { background: var(--cobalt); color: #fff; }
+  .photo-count { position: absolute; bottom: 18px; right: 18px; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; padding: 7px 12px; border-radius: 2px; background: rgba(22,21,19,0.7); color: #fff; letter-spacing: 0.06em; }
+
+  .p-head { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 60px; align-items: end; padding: 56px 0 48px; border-bottom: 1px solid var(--line); }
+  .p-head h1 { font-size: clamp(2.4rem, 5.5vw, 4.2rem); margin: 20px 0 14px; }
+  .p-head .loc { color: var(--ink-soft); font-size: 1.05rem; }
+  .price { text-align: right; }
+  .price .lbl { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); }
+  .price .uf { font-size: clamp(2.2rem, 4.5vw, 3.4rem); font-weight: 200; letter-spacing: -0.02em; margin: 6px 0 4px; }
+  .price .m2 { font-size: 0.9rem; color: var(--signal); }
+
+  /* KEY STATS */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--line); }
+  .stat { padding: 36px 0; }
+  .stat + .stat { border-left: 1px solid var(--line); padding-left: 32px; }
+  .stat .big { font-size: clamp(2rem, 3.6vw, 2.9rem); font-weight: 200; letter-spacing: -0.02em; }
+  .stat .lbl { font-size: 0.82rem; color: var(--ink-faint); margin-top: 4px; }
+
+  /* DESCRIPTION + DETAILS */
+  .pad { padding: 100px 0; }
+  .desc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .desc h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); margin: 22px 0 24px; }
+  .desc p { color: var(--ink-soft); font-size: 1.04rem; line-height: 1.75; margin-bottom: 18px; max-width: 520px; }
+  .m2-note { display: inline-flex; align-items: center; gap: 12px; margin-top: 10px; padding: 14px 18px; border: 1px solid var(--line-strong); border-radius: 3px; font-size: 0.92rem; }
+  .m2-note .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--signal); }
+  .m2-note strong { font-family: 'JetBrains Mono', monospace; font-weight: 500; }
+
+  .details { border-top: 1px solid var(--line-strong); }
+  .row { display: flex; justify-content: space-between; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--line); gap: 20px; }
+  .row .k { color: var(--ink-faint); font-size: 0.92rem; }
+  .row .v { font-size: 1.02rem; text-align: right; }
+  .amen-label { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); margin: 36px 0 14px; display: block; }
+  .amen { display: flex; flex-wrap: wrap; gap: 10px; }
+  .amen span { font-size: 0.88rem; padding: 9px 16px; border: 1px solid var(--line-strong); border-radius: 100px; background: var(--bg-deep); }
+
+  /* GALLERY */
+  .gallery-sec { background: var(--bg-warm); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .gallery-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; gap: 20px; flex-wrap: wrap; }
+  .gallery-head h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); margin-top: 22px; }
+  .gallery { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; }
+  .g { position: relative; overflow: hidden; border-radius: 3px; background: var(--bg-deep); cursor: zoom-in; aspect-ratio: 16 / 9; }
+  .g.w3 { grid-column: span 3; aspect-ratio: 16 / 10; }
+  .g.w2 { grid-column: span 2; aspect-ratio: 4 / 3; }
+  .g.w6 { grid-column: span 6; aspect-ratio: 16 / 7; }
+  .g img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .8s ease; }
+  .g:hover img { transform: scale(1.03); }
+  .g figcaption { position: absolute; left: 14px; bottom: 14px; font-size: 0.78rem; padding: 6px 11px; border-radius: 2px; background: rgba(243,242,238,0.92); }
+
+  /* CTA */
+  .cta { background: var(--black-solid); color: rgba(243,242,238,0.6); padding: 110px 0; text-align: center; }
+  .cta h2 { color: var(--bg); font-size: clamp(2rem, 4vw, 3rem); margin: 22px 0 16px; }
+  .cta .eyebrow { color: #8FB4EA; }
+  .cta .eyebrow::before { background: #8FB4EA; }
+  .cta p { max-width: 520px; margin: 0 auto 40px; font-size: 1.02rem; }
+  .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-wa { display: inline-flex; align-items: center; gap: 12px; background: var(--bg); color: var(--black-solid); padding: 16px 32px; border-radius: 3px; font-size: 0.95rem; transition: transform .3s, box-shadow .3s; }
+  .btn-wa:hover { transform: translateY(-1px); box-shadow: 0 10px 30px rgba(0,0,0,0.35); }
+  .btn-wa svg { width: 18px; height: 18px; color: #25D366; }
+  .btn-ghost-d { display: inline-flex; align-items: center; gap: 8px; padding: 16px 28px; border: 1px solid rgba(243,242,238,0.25); border-radius: 3px; font-size: 0.95rem; color: var(--bg); transition: border-color .3s; }
+  .btn-ghost-d:hover { border-color: var(--bg); }
+  .cta .phone { margin-top: 26px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: rgba(243,242,238,0.5); }
+
+  footer { background: var(--black-solid); color: rgba(243,242,238,0.45); border-top: 1px solid rgba(243,242,238,0.1); padding: 30px 0; font-size: 0.8rem; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  footer a:hover { color: var(--bg); }
+
+  /* FLOATING WA (mobile) */
+  .wa-float { position: fixed; right: 18px; bottom: 18px; z-index: 90; width: 56px; height: 56px; border-radius: 50%; background: #25D366; color: #fff; display: none; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,0.25); }
+  .wa-float svg { width: 28px; height: 28px; }
+
+  /* LIGHTBOX */
+  .lb { position: fixed; inset: 0; z-index: 2000; background: rgba(22,21,19,0.94); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity .3s, visibility .3s; }
+  .lb.open { opacity: 1; visibility: visible; }
+  .lb img { max-width: 92vw; max-height: 82vh; border-radius: 3px; display: block; }
+  .lb-cap { position: absolute; bottom: 28px; left: 0; right: 0; text-align: center; color: rgba(243,242,238,0.8); font-size: 0.9rem; }
+  .lb-cap .mono { color: rgba(243,242,238,0.45); margin-left: 10px; font-size: 0.78rem; }
+  .lb button { position: absolute; background: transparent; border: none; color: rgba(243,242,238,0.75); font-size: 2rem; cursor: pointer; padding: 16px; line-height: 1; transition: color .2s; font-family: 'Inter', sans-serif; font-weight: 200; }
+  .lb button:hover { color: #fff; }
+  .lb-close { top: 14px; right: 18px; }
+  .lb-prev { left: 10px; top: 50%; transform: translateY(-50%); }
+  .lb-next { right: 10px; top: 50%; transform: translateY(-50%); }
+
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity .9s ease, transform .9s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (max-width: 860px) {
+    .wrap { padding: 0 22px; }
+    .p-hero { padding-top: 96px; }
+    .p-hero-img { aspect-ratio: 4 / 3; }
+    .p-head { grid-template-columns: 1fr; gap: 24px; padding: 40px 0 32px; }
+    .price { text-align: left; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stat { padding: 26px 0; }
+    .stat + .stat { padding-left: 22px; }
+    .stat:nth-child(3) { border-left: none; padding-left: 0; border-top: 1px solid var(--line); }
+    .stat:nth-child(4) { border-top: 1px solid var(--line); }
+    .desc-grid { grid-template-columns: 1fr; gap: 50px; }
+    .pad { padding: 70px 0; }
+    .gallery { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .g.w3, .g.w2 { grid-column: span 1; aspect-ratio: 4 / 3; }
+    .g.w6 { grid-column: span 2; aspect-ratio: 16 / 10; }
+    .gallery .g:nth-child(11) { grid-column: span 2; aspect-ratio: 16 / 10; }
+    .g figcaption { font-size: 0.7rem; left: 8px; bottom: 8px; padding: 4px 8px; }
+    .nav-back { display: none; }
+    .wa-float { display: flex; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: .01ms !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="/" class="logo-mark">
+      <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 13L13 4L23 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="3" cy="13" r="1.6" fill="currentColor"/><circle cx="23" cy="13" r="1.6" fill="currentColor"/><circle cx="13" cy="4" r="1.6" fill="currentColor"/>
+      </svg>
+      UMHAUS
+    </a>
+    <div class="nav-right">
+      <a href="/#propiedades" class="nav-back">← Todas las propiedades</a>
+      <a href="#" class="nav-cta" data-wa>Agendar visita</a>
+    </div>
+  </div>
+</nav>
+
+<header class="p-hero">
+  <div class="wrap">
+    <div class="p-hero-img" data-open="0">
+      <img src="img/portada.jpg" alt="Departamento Hipólito Irigoyen, Providencia" fetchpriority="high">
+      <div class="badge"><span>En venta</span><span class="hot">Recién rebajado</span></div>
+      <div class="photo-count">VER 11 FOTOS</div>
+    </div>
+
+    <div class="p-head">
+      <div>
+        <span class="eyebrow">Providencia · Barrio Las Lilas</span>
+        <h1>Hipólito Irigoyen</h1>
+        <p class="loc">Barrio Las Lilas, a 5 minutos caminando del Metro Colón.</p>
+      </div>
+      <div class="price">
+        <div class="lbl">Precio de venta</div>
+        <div class="uf">UF 7.590</div>
+        <div class="m2">Antes UF 8.200 · bajo el promedio por m² del sector</div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="big">107</div><div class="lbl">m² totales</div></div>
+      <div class="stat"><div class="big">3</div><div class="lbl">dormitorios + servicio</div></div>
+      <div class="stat"><div class="big">3</div><div class="lbl">baños</div></div>
+      <div class="stat"><div class="big">1</div><div class="lbl">estacionamiento</div></div>
+    </div>
+  </div>
+</header>
+
+<section class="pad">
+  <div class="wrap">
+    <div class="desc-grid">
+      <div class="desc">
+        <span class="eyebrow reveal">La propiedad</span>
+        <h2 class="reveal">Espacio y tranquilidad en Barrio Las Lilas.</h2>
+        <p class="reveal">Departamento de 107 m² con 3 dormitorios más servicio, dormitorio principal en suite, 3 baños, terraza, estacionamiento y bodega. Ideal para familias o quienes necesitan espacios amplios para vivir y trabajar.</p>
+        <p class="reveal">Entorno residencial de calles arboladas, en condominio cerrado, a 5 minutos caminando del Metro Colón. Cerca de cafés, restaurantes, supermercados, colegios y plazas.</p>
+        <div class="m2-note reveal"><span class="dot"></span>Recién rebajado: antes UF 8.200, ahora <strong>UF 7.590</strong></div>
+      </div>
+      <div class="reveal">
+        <div class="details">
+          <div class="row"><span class="k">Superficie total</span><span class="v">107 m²</span></div>
+          <div class="row"><span class="k">Dormitorios</span><span class="v">3 + servicio</span></div>
+          <div class="row"><span class="k">Dormitorio principal</span><span class="v">En suite</span></div>
+          <div class="row"><span class="k">Baños</span><span class="v">3</span></div>
+          <div class="row"><span class="k">Terraza</span><span class="v">Sí</span></div>
+          <div class="row"><span class="k">Estacionamiento</span><span class="v">1</span></div>
+          <div class="row"><span class="k">Bodega</span><span class="v">1</span></div>
+          <div class="row"><span class="k">Piso</span><span class="v">4 de 7</span></div>
+          <div class="row"><span class="k">Orientación</span><span class="v">Norponiente (NP)</span></div>
+          <div class="row"><span class="k">Antigüedad</span><span class="v">20 años</span></div>
+          <div class="row"><span class="k">Gastos comunes</span><span class="v">Desde $280.000</span></div>
+        </div>
+        <span class="amen-label">Edificio y departamento</span>
+        <div class="amen">
+          <span>Condominio cerrado</span><span>Ascensor</span><span>Estacionamiento de visitas</span><span>Áreas verdes</span><span>Admite mascotas</span><span>Comedor de diario</span><span>Baño de visitas</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pad gallery-sec" id="fotos">
+  <div class="wrap">
+    <div class="gallery-head">
+      <div>
+        <span class="eyebrow reveal">Galería</span>
+        <h2 class="reveal">Recorra el departamento.</h2>
+      </div>
+      <span class="mono reveal" style="font-size:.75rem;color:var(--ink-faint);">11 FOTOS · CLICK PARA AMPLIAR</span>
+    </div>
+    <div class="gallery" id="gallery"></div>
+  </div>
+</section>
+
+<section class="cta" id="visita">
+  <div class="wrap">
+    <span class="eyebrow">Agenda tu visita</span>
+    <h2>¿Lo quiere conocer?</h2>
+    <p>Escríbanos por WhatsApp y coordinamos una visita a la hora que le acomode.</p>
+    <div class="cta-actions">
+      <a href="#" class="btn-wa" data-wa>
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.5h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35zM12.05 21.5h-.01a9.43 9.43 0 0 1-4.8-1.32l-.35-.2-3.57.93.95-3.48-.22-.36a9.4 9.4 0 0 1-1.44-5.02c0-5.2 4.24-9.43 9.45-9.43 2.52 0 4.89.98 6.67 2.77a9.36 9.36 0 0 1 2.76 6.67c0 5.2-4.24 9.44-9.44 9.44zm8.03-17.47A11.29 11.29 0 0 0 12.05.7C5.79.7.7 5.79.7 12.05c0 2 .52 3.95 1.52 5.67L.6 23.3l5.72-1.5a11.3 11.3 0 0 0 5.72 1.46h.01c6.26 0 11.35-5.09 11.35-11.35 0-3.03-1.18-5.88-3.32-8.02z"/></svg>
+        Escribir por WhatsApp
+      </a>
+      <a href="/" class="btn-ghost-d">Conocer UMHAUS</a>
+    </div>
+    <div class="phone">+56 9 5749 5671 · umhaus.cl</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 UMHAUS.IA</span>
+    <a href="mailto:i@umhaus.cl">i@umhaus.cl</a>
+  </div>
+</footer>
+
+<a href="#" class="wa-float" data-wa aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.490-1.77-1.66-2.07-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.5h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.490.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35zM12.05 21.5h-.01a9.43 9.43 0 0 1-4.8-1.32l-.35-.2-3.57.93.95-3.48-.22-.36a9.4 9.4 0 0 1-1.44-5.02c0-5.2 4.24-9.43 9.45-9.43 2.52 0 4.89.98 6.67 2.77a9.36 9.36 0 0 1 2.760 6.67c0 5.2-4.24 9.44-9.44 9.44zm8.03-17.47A11.29 11.29 0 0 0 12.05.7C5.79.7.7 5.79.7 12.05c0 2 .52 3.95 1.52 5.67L.6 23.3l5.72-1.5a11.3 11.3 0 0 0 5.72 1.46h.01c6.26 0 11.35-5.09 11.35-11.35 0-3.03-1.18-5.88-3.32-8.020z"/></svg>
+</a>
+
+<div class="lb" id="lb">
+  <button class="lb-close" aria-label="Cerrar">×</button>
+  <button class="lb-prev" aria-label="Anterior">‹</button>
+  <img id="lbImg" alt="">
+  <button class="lb-next" aria-label="Siguiente">›</button>
+  <div class="lb-cap"><span id="lbCap"></span><span class="mono" id="lbNum"></span></div>
+</div>
+
+<script>
+  // ----- Datos de la propiedad (editar aquí) -----
+  var WA_NUMBER = '56957495671';
+  var WA_TEXT = 'Hola, me interesa el departamento de Hipólito Irigoyen (Providencia, UF 7.590) que vi en umhaus.cl. ¿Podemos agendar una visita?';
+  var PHOTOS = [
+    { src: 'img/living-terraza.jpg',    cap: 'Living con salida a terraza',   size: 'w2' },
+    { src: 'img/living.jpg',            cap: 'Living comedor',                size: 'w2' },
+    { src: 'img/terraza.jpg',           cap: 'Terraza',                       size: 'w2' },
+    { src: 'img/cocina.jpg',            cap: 'Cocina',                        size: 'w2' },
+    { src: 'img/principal-suite.jpg',   cap: 'Dormitorio principal en suite', size: 'w2' },
+    { src: 'img/dormitorio-vista.jpg',  cap: 'Ventanal en esquina',           size: 'w2' },
+    { src: 'img/dormitorio-2.jpg',      cap: 'Dormitorio',                    size: 'w2' },
+    { src: 'img/dormitorio-3.jpg',      cap: 'Dormitorio con clóset',         size: 'w2' },
+    { src: 'img/dormitorio-4.jpg',      cap: 'Dormitorio',                    size: 'w2' },
+    { src: 'img/pasillo.jpg',           cap: 'Pasillo',                       size: 'w3' },
+    { src: 'img/vista.jpg',             cap: 'Vista al barrio',               size: 'w3' }
+  ];
+
+  // WhatsApp links
+  var waUrl = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(WA_TEXT);
+  document.querySelectorAll('[data-wa]').forEach(function (a) { a.href = waUrl; a.target = '_blank'; a.rel = 'noopener'; });
+
+  // Gallery
+  var gal = document.getElementById('gallery');
+  PHOTOS.forEach(function (p, i) {
+    var f = document.createElement('figure');
+    f.className = 'g reveal ' + p.size;
+    f.setAttribute('data-open', i);
+    f.innerHTML = '<img src="' + p.src + '" alt="' + p.cap + '" loading="lazy"><figcaption>' + p.cap + '</figcaption>';
+    gal.appendChild(f);
+  });
+
+  // Lightbox
+  var lb = document.getElementById('lb'), lbImg = document.getElementById('lbImg'),
+      lbCap = document.getElementById('lbCap'), lbNum = document.getElementById('lbNum'), cur = 0;
+  function show(i) {
+    cur = (i + PHOTOS.length) % PHOTOS.length;
+    lbImg.src = PHOTOS[cur].src; lbImg.alt = PHOTOS[cur].cap;
+    lbCap.textContent = PHOTOS[cur].cap; lbNum.textContent = (cur + 1) + ' / ' + PHOTOS.length;
+  }
+  function open(i) { show(i); lb.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function close() { lb.classList.remove('open'); document.body.style.overflow = ''; }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-open]');
+    if (t) open(parseInt(t.getAttribute('data-open'), 10));
+  });
+  lb.querySelector('.lb-close').onclick = close;
+  lb.querySelector('.lb-prev').onclick = function (e) { e.stopPropagation(); show(cur - 1); };
+  lb.querySelector('.lb-next').onclick = function (e) { e.stopPropagation(); show(cur + 1); };
+  lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
+  document.addEventListener('keydown', function (e) {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') show(cur - 1);
+    if (e.key === 'ArrowRight') show(cur + 1);
+  });
+  var sx = null;
+  lb.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener('touchend', function (e) {
+    if (sx === null) return; var dx = e.changedTouches[0].clientX - sx;
+    if (Math.abs(dx) > 40) show(cur + (dx < 0 ? 1 : -1)); sx = null;
+  });
+
+  // Reveal
+  var els = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function (en) {
+      en.forEach(function (x) { if (x.isIntersecting) { x.target.classList.add('in'); obs.unobserve(x.target); } });
+    }, { threshold: 0.12 });
+    els.forEach(function (el) { obs.observe(el); });
+  } else { els.forEach(function (el) { el.classList.add('in'); }); }
+</script>
+</body>
+</html>
